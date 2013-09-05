@@ -219,6 +219,10 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     self.reachabilitySerialQueue = dispatch_queue_create("com.tonymillion.reachability", NULL);
     if(!self.reachabilitySerialQueue)
     {
+#if NEEDS_DISPATCH_RETAIN_RELEASE
+        dispatch_release(self.reachabilitySerialQueue);
+#endif
+        self.reachabilitySerialQueue = nil;
         return NO;
     }
     
